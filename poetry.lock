@@ -207,6 +207,17 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "meilisearch"
+version = "0.19.0"
+description = "The python client for Meilisearch API."
+category = "main"
+optional = false
+python-versions = ">=3"
+
+[package.dependencies]
+requests = "*"
+
+[[package]]
 name = "orjson"
 version = "3.7.7"
 description = "Fast, correct Python JSON library supporting dataclasses, datetimes, and numpy"
@@ -464,7 +475,7 @@ python-versions = ">=3.7"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "1ccbd05002e3d69c92e4fa000f277e18f6a8e0ce077cf22c703871551df09059"
+content-hash = "efc5da7803bd49950a4806f915ee5ddf8ad829c636c117f55c17def39ce8e067"
 
 [metadata.files]
 anyio = [
@@ -607,6 +618,10 @@ markupsafe = [
     {file = "MarkupSafe-2.1.1-cp39-cp39-win32.whl", hash = "sha256:d4306c36ca495956b6d568d276ac11fdd9c30a36f1b6eb928070dc5360b22e1c"},
     {file = "MarkupSafe-2.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:46d00d6cfecdde84d40e572d63735ef81423ad31184100411e6e3388d405e247"},
     {file = "MarkupSafe-2.1.1.tar.gz", hash = "sha256:7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"},
+]
+meilisearch = [
+    {file = "meilisearch-0.19.0-py3-none-any.whl", hash = "sha256:72d2f0267f4c7e3c000167896b2613dacf64080618f0fa67e4eddf722e7b6eb4"},
+    {file = "meilisearch-0.19.0.tar.gz", hash = "sha256:a1e4f277f8c5c12d11357e54b92ba32aeab2f9ce4378baeafef4179edc4eb4c4"},
 ]
 orjson = [
     {file = "orjson-3.7.7-cp310-cp310-macosx_10_7_x86_64.whl", hash = "sha256:092fde5b1768ca68af0d3764746e93b4b7200050fdd9c1ea044fd106e2379951"},

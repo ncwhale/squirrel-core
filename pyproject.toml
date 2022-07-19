@@ -8,6 +8,7 @@ authors = ["Whale Mo <ncwhale@gmail.com>"]
 python = "^3.10"
 fastapi = {extras = ["all"], version = "^0.79.0"}
 Jinja2 = "^3.1.2"
+meilisearch = "^0.19.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
