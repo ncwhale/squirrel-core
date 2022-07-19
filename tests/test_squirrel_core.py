@@ -1,5 +1,6 @@
-from api import __version__
-
+from api import __version__ as api_version
+from squirrel_core import __version__ as core_version
 
 def test_version():
-    assert __version__ == '0.1.0'
+    assert core_version == '0.1.0'
+    assert api_version == '0.1.0'
