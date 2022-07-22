@@ -1,25 +1,61 @@
 version: '3'
 
 services:
-  meilisearch:
+  core:
+    container_name: squirrel-core
+    build: .
+    restart: always
+    links:
+      - ms
+      - db
+      - redis
+    ports:
+      - ${CORE_PORT:-8000}:8000
+    volumes:
+      - data.squirrel:/data
+      - ./squirrel_core:/app/squirrel_core
+    tty: true
+
+  ms:
     container_name: meilisearch
-    image: getmeili/meilisearch:v0.25.2
+    image: getmeili/meilisearch:latest
     environment:
-      - http_proxy
-      - https_proxy
-      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-masterKey}
-      - MEILI_NO_ANALYTICS=${MEILI_NO_ANALYTICS:-true}
+      - MEILI_NO_ANALYTICS=true
       - MEILI_ENV=${MEILI_ENV:-development}
       - MEILI_LOG_LEVEL
-      - MEILI_DB_PATH=${MEILI_DB_PATH:-/data.ms}
+      - MEILI_DB_PATH=/data.ms
     ports:
       - ${MEILI_PORT:-7700}:7700
-    networks:
-      - meilisearch
     volumes:
-      - ./data.ms:/data.ms
+      - data.ms:/data.ms
     restart: unless-stopped
+    env_file:
+      - core.env
 
-networks:
-  meilisearch:
-    driver: bridge
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    ports:
+      - ${DB_PORT:-5432}:5432
+    volumes:
+      - data.db:/var/lib/postgresql/data
+    restart: unless-stopped
+    env_file:
+      - core.env
+
+  redis:
+    container_name: redis
+    image: redis:alpine
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    volumes:
+      - data.redis:/data
+    restart: unless-stopped
+    env_file:
+      - core.env
+
+volumes:
+  data.ms:
+  data.db:
+  data.redis:
+  data.squirrel:
