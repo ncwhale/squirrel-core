@@ -1,5 +1,6 @@
 from datetime import datetime
 from fastapi import APIRouter
+from ..hooks import pm
 from .schema import GrabRequest
 from .flow import AddGrabRequest
 
@@ -15,3 +16,5 @@ async def input_view():
 async def add_task(task: GrabRequest):
     result = await AddGrabRequest(task)
     return {"result": result, "timestamp": datetime.now()}
+
+pm.hook.CollectorRouterInit(router=router)
