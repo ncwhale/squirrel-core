@@ -14,6 +14,7 @@ services:
     volumes:
       - data.squirrel:/data
       - ./squirrel_core:/app/squirrel_core
+      - ./templates:/app/templates
     tty: true
 
   ms:
