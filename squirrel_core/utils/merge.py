@@ -8,10 +8,13 @@ def dict_deep_merge(a: dict, b: dict) -> dict:
         if key in a:
             if isinstance(a[key], dict) and isinstance(b[key], dict):
                 # Recursive for dict merge.
-                dict_deep_merge(a[key], b[key])
+                try:
+                    dict_deep_merge(a[key], b[key])
+                except TypeError as e:
+                    raise TypeError(f'{key}.{e}') from None
             elif isinstance(a[key], dict) and not isinstance(b[key], dict):
                 # dict is fist here. None dict values cannot merge to dict keys.
-                raise ValueError("Cannot merge a dictionary with other types.")
+                raise TypeError(f"{key}:Cannot merge a dictionary with other types.")
             elif a[key] == b[key]:
                 # Same value, do nothing.
                 pass
