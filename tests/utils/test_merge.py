@@ -1,5 +1,6 @@
 import pytest
 
+
 def test_dict_deep_merge():
     from squirrel_core.utils.merge import dict_deep_merge
 

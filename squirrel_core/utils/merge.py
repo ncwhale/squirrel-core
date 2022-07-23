@@ -1,5 +1,3 @@
-
-
 def dict_deep_merge(a: dict, b: dict) -> dict:
     """
     Merge two dictionaries.
@@ -11,10 +9,12 @@ def dict_deep_merge(a: dict, b: dict) -> dict:
                 try:
                     dict_deep_merge(a[key], b[key])
                 except TypeError as e:
+                    # Trick: show key path here.
                     raise TypeError(f'{key}.{e}') from None
             elif isinstance(a[key], dict) and not isinstance(b[key], dict):
                 # dict is fist here. None dict values cannot merge to dict keys.
-                raise TypeError(f"{key}:Cannot merge a dictionary with other types.")
+                raise TypeError(
+                    f"{key}:Cannot merge a dictionary with other types.")
             elif a[key] == b[key]:
                 # Same value, do nothing.
                 pass
