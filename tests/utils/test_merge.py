@@ -13,5 +13,7 @@ def test_dict_deep_merge():
     # Test 2: Merge two dictionaries with some key is not dict.
     a = {'a': {'b': {'c': {'d': 1, 'l': {'x': 1, 'y': 2, 'z': 3}}}}}
     b = {'a': {'b': {'c': {'e': 2, 'l': [1, 2, 3]}}}}
-    with pytest.raises(TypeError):
+    with pytest.raises(TypeError) as e:
         c = dict_deep_merge(dict(a), b)
+
+    assert type(e.value) == TypeError , "Should raise TypeError."
