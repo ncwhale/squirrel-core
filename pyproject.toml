@@ -11,6 +11,8 @@ Jinja2 = "^3.1.2"
 meilisearch = "^0.19.0"
 pluggy = "^1.0.0"
 MarkupSafe = "^2.1.1"
+hypercorn = "^0.13.2"
+trio = "^0.21.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
