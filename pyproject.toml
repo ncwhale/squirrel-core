@@ -13,6 +13,8 @@ pluggy = "^1.0.0"
 MarkupSafe = "^2.1.1"
 hypercorn = "^0.13.2"
 trio = "^0.21.0"
+jieba = "^0.42.1"
+paddlepaddle = "2.4.0rc0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
