@@ -1,4 +1,4 @@
-from imp import _FileLike
+# from imp import _FileLike
 from pydantic import BaseModel
 from typing import Optional
 
@@ -12,4 +12,4 @@ class GrabRequest(BaseModel):
 
 class Resource(BaseModel):
     metadata: Optional[dict] = None
-    blob: Optional[_FileLike] = None
+    blob: Optional[bytes] = None

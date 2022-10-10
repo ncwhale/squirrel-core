@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from ..hooks import hookspec
-from .schema import GrabRequest
+from ..schema import GrabRequest
 
 
 class CollectorHookspec:

@@ -1,5 +1,5 @@
 from ..hooks import pm
-from .schema import GrabRequest
+from ..schema import GrabRequest
 
 
 async def AddGrabRequest(req: GrabRequest) -> list | dict | None:

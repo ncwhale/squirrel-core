@@ -4,7 +4,7 @@ from fastapi.responses import HTMLResponse
 
 from ..hooks import pm
 from ..templates import templates
-from .schema import GrabRequest
+from ..schema import GrabRequest
 from .flow import AddGrabRequest
 
 router = APIRouter()
