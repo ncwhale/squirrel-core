@@ -38,6 +38,7 @@ def run_migrations_offline() -> None:
     script output.
 
     """
+    # TODO: Use squirrel.core.config instead.
     url = config.get_main_option("sqlalchemy.url")
     context.configure(
         url=url,
@@ -58,7 +59,8 @@ def run_migrations_online() -> None:
 
     """
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        # TODO: Use squirrel.core.config instead.
+        config.get_section(config.config_ini_section) or {},
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
