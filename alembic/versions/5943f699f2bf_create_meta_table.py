@@ -19,7 +19,7 @@ depends_on = None
 
 def upgrade() -> None:
   op.create_table(
-      "document",
+      "meta",
       sa.Column(
           'id',
           UUID(as_uuid=True),
@@ -28,9 +28,8 @@ def upgrade() -> None:
           default=uuid.uuid4),
       sa.Column('meta', sa.JSON),
       sa.Column('origin_url', sa.String),
-      sa.Column('raw_document', sa.TEXT),
   )
 
 
 def downgrade() -> None:
-  op.drop_table("document")
+  op.drop_table("meta")
