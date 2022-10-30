@@ -48,7 +48,7 @@ graph TD
 1. Meta 是一个经过各个 Worker 处理后，可以检索的 Key/Value 字典；
 1. Document 是原始获取的内容（文本/媒体/等）；
 2. 每个 Document 必然有至少一个对应的 Meta 数据来描述其内容摘要；
-3. Meta 可以引用其它 Meta 来描述其关联的内容；
+3. Meta 可以互相关联，来表述其从属关系；
 
 ## Task & Schedule
 
@@ -56,16 +56,10 @@ graph TD
 2. Task 可以从 Meta Insert/Update/Select 等操作中生成；其中 Meta Insert/Update 会通过消息管线实时广播，而 Meta Select 可以通过 API 查询后批量处理；
 3. Schedule 可以通过排期生成对应 Task；
 
-## Worker & Group
+## Worker & Service
 
+3. 一个 Service 是 squirrel 里的一组扩充服务，常见包括以下组件：
 1. 一个 Worker 代表一个实际进行 Meta 相关 Document获取/解析/筛选 等事务的 Exectuable (服务/进程/线程/函数/etc)；
-2. 一组相同类型的服务可以组成一个 Group,由 Group 接口负责调度 Worker 进行任务执行；
-
-## Service
-
-一个 Service 是 squirrel 里的一组扩充服务，常见包括以下组件：
-
-1. Worker 负责具体事务处理；
 2. Filter 负责订阅消息过滤和 Task 生成；
 3. Register 注册服务端点及相关参数；
 
