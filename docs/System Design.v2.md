@@ -4,16 +4,32 @@
 
 ```mermaid
 graph TD
-  Create--Meta-->Save-->Publish
-  Update--Meta-->Save
-  Merge--Meta-->Save
-  Subscribe--Meta-->Filter--Task-->Schedule
-  Schedule--Task-->Worker
-  Worker--Meta-->Create
-  Worker--Meta-->Update
-  Worker--Meta-->Merge
-  Worker--Task-->Schedule
-  Worker--Document-->Storage
+  subgraph core
+    Create--Meta-->DB-->Publish
+    Update--Meta-->DB
+    Merge--Meta-->DB 
+    DB-->Query
+  end
+  subgraph storage
+    Write--Document-->Storage
+    Storage-->Access
+  end
+  subgraph task schedule
+    CreateTask-->Schedule-->DistributeTask
+    RescheduleTask-->Schedule
+  end
+  subgraph filter
+    Subscribe--Meta-->Filter--Task-->CreateTask
+  end
+  subgraph worker
+    DistributeTask--Task-->Worker
+    Worker--Meta-->Create
+    Worker--Meta-->Update
+    Worker--Meta-->Merge
+    Worker--Task-->CreateTask
+    Worker--Task-->RescheduleTask
+    Worker--Document-->Write
+  end
 ```
 
 ## Meta & Document
@@ -32,4 +48,42 @@ graph TD
 
 ## Worker & Group
 
-1. 一个 Worker 代表一个实际进行 Meta 相关 Document获取/解析/筛选 等事务的进程/线程；
+1. 一个 Worker 代表一个实际进行 Meta 相关 Document获取/解析/筛选 等事务的 Exectuable (服务/进程/线程/函数/etc)；
+2. 一组相同类型的服务可以组成一个 Group,由 Group 接口负责调度 Worker 进行任务执行；
+
+## Service
+
+一个 Service 是 squirrel 里的一组扩充服务，常见包括以下组件：
+
+1. Worker 负责具体事务处理；
+2. Filter 负责订阅消息过滤和 Task 生成；
+3. Register 注册服务端点及相关参数；
+
+# 核心组件
+
+## Core
+
+Core 负责 Meta 相关事务：
+
+1. 存储/更新 Meta 数据；
+2. 分发 Meta 消息；
+3. 提供 Meta 检索接口；
+
+## Schedule 
+
+Schedule 负责 Task 相关事务：
+
+1. 创建 Task；
+2. (根据时间表/繁忙程度/配置额度等)调度 Task 进入执行状态；
+3. 接收 Task 执行结果（成功/失败/重新调度）；
+4. （定期）清理 Task 列表；
+5. Task 调度/查询 接口；
+
+## Register
+
+Register 负责 Service 相关事务：
+
+1. Service Register;
+3. Service Name Search / Poll；
+2. Service Route；
+4. Service keepalive test；
