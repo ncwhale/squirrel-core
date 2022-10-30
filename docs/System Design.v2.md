@@ -4,24 +4,26 @@
 
 ```mermaid
 graph TD
-  subgraph core
-    Create--Meta-->DB-->Publish
-    Update--Meta-->DB
-    Merge--Meta-->DB 
-    DB-->Query
-  end
-  subgraph storage
-    Write--Document-->Storage
-    Storage-->Access
-  end
-  subgraph service register
-    RegisterService
-    KeepaliveTest
-    NameSearch
-  end
-  subgraph task schedule
-    CreateTask-->Schedule-->DistributeTask-->NameSearch
-    RescheduleTask-->Schedule
+  subgraph Core
+    subgraph meta
+        Create--Meta-->DB-->Publish
+        Update--Meta-->DB
+        Merge--Meta-->DB 
+        DB-->Query
+    end
+    subgraph storage
+        Write--Document-->Storage
+        Storage-->Access
+    end
+    subgraph register
+        RegisterService
+        KeepaliveTest
+        NameSearch
+    end
+    subgraph schedule
+        CreateTask-->Schedule-->DistributeTask-->NameSearch
+        RescheduleTask-->Schedule
+    end
   end
   subgraph service
     selfRegister-->RegisterService
@@ -38,7 +40,6 @@ graph TD
         Worker--Document-->Write
     end
   end
-
 ```
 
 ## Meta & Document
@@ -68,11 +69,11 @@ graph TD
 2. Filter 负责订阅消息过滤和 Task 生成；
 3. Register 注册服务端点及相关参数；
 
-# 核心组件
+# 核心组件(Core)
 
-## Core
+## Meta
 
-Core 负责 Meta 相关事务：
+负责 Meta 相关事务：
 
 1. 存储/更新 Meta 数据；
 2. 分发 Meta 消息；
