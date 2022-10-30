@@ -14,22 +14,31 @@ graph TD
     Write--Document-->Storage
     Storage-->Access
   end
+  subgraph service register
+    RegisterService
+    KeepaliveTest
+    NameSearch
+  end
   subgraph task schedule
-    CreateTask-->Schedule-->DistributeTask
+    CreateTask-->Schedule-->DistributeTask-->NameSearch
     RescheduleTask-->Schedule
   end
-  subgraph filter
-    Subscribe--Meta-->Filter--Task-->CreateTask
+  subgraph service
+    selfRegister-->RegisterService
+    subgraph filter
+        Subscribe--Meta-->Filter--Task-->CreateTask
+    end
+    subgraph worker
+        DistributeTask--Task-->Worker
+        Worker--Meta-->Create
+        Worker--Meta-->Update
+        Worker--Meta-->Merge
+        Worker--Task-->CreateTask
+        Worker--Task-->RescheduleTask
+        Worker--Document-->Write
+    end
   end
-  subgraph worker
-    DistributeTask--Task-->Worker
-    Worker--Meta-->Create
-    Worker--Meta-->Update
-    Worker--Meta-->Merge
-    Worker--Task-->CreateTask
-    Worker--Task-->RescheduleTask
-    Worker--Document-->Write
-  end
+
 ```
 
 ## Meta & Document
