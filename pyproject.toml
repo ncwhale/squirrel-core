@@ -7,9 +7,22 @@ authors = ["Whale Mo <ncwhale@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = {extras = ["all"], version = "^0.79.0"}
+Jinja2 = "^3.1.2"
+meilisearch = "^0.19.0"
+pluggy = "^1.0.0"
+MarkupSafe = "^2.1.1"
+hypercorn = "^0.13.2"
+trio = "^0.21.0"
+jieba = "^0.42.1"
+paddlepaddle = "2.4.0rc0"
+ImageHash = "^4.3.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.2"
+autopep8 = "^1.6.0"
+
+[tool.poetry.group.dev.dependencies]
+alembic = "^1.8.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
