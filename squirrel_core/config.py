@@ -37,5 +37,6 @@ config_files = config.read([
 config.read_dict({
     "squirrel": {
         "mode": env_mode,
+        "config_files": config_files,
     },
 })
