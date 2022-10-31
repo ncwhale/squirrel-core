@@ -1,5 +1,6 @@
 import os
 import configparser
+from xmlrpc.client import Boolean
 
 config = configparser.ConfigParser(allow_no_value=True, strict=True)
 
@@ -8,12 +9,13 @@ config.read_dict({
     "squirrel": {
         "mode": "development",
     },
-    "database": {
+    "db": {
+        "driver": "postgresql",
         "host": "localhost",
         "port": "5432",
-        "user": "postgresql",
-        "pass": "",
-        "database": "squirrel_core",
+        "user": "squirrel",
+        "password": "",
+        "db": "squirrel_core",
     },
 })
 
@@ -33,10 +35,23 @@ config_files = config.read([
     os.environ.get("SQUIRREL_CONFIG_FILE", f"{env_mode}.ini"),
 ])
 
-# Combine the ENV variables.
+# Combine ENV variables.
+db_section = config['db']
+db_section.update({
+    key.removeprefix("POSTGRES_"):value 
+    for key,value in os.environ.items()
+    if key.startswith("POSTGRES_")
+})
+
 config.read_dict({
     "squirrel": {
         "mode": env_mode,
         "config_files": config_files,
+    },
+    "db": {
+        "url": f'{db_section["driver"]}://{db_section["user"]}' \
+            f'{":" if db_section["password"] else ""}{db_section["password"]}' \
+            f'@{db_section["host"]}{":" if db_section["port"] else ""}' \
+            f'{db_section["port"]}/{db_section["db"]}',
     },
 })
